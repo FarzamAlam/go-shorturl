@@ -10,7 +10,7 @@ import (
 var world = []byte("world!")
 
 func main() {
-	db, err := bolt.Open("D:\\BattleField\\url-shortner\\bold.db", 0644, nil)
+	db, err := bolt.Open("/d/BattleField/url-shortner/bold.db", 0644, nil)
 
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "db.go : %v", err)
@@ -31,7 +31,6 @@ func main() {
 		if err != nil {
 			return err
 		}
-		return nil
 	})
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error : %v", err)
