@@ -1,4 +1,4 @@
-package main
+package BC
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ import (
 
 var world = []byte("world!")
 
-func main() {
+func avc() {
 	db, err := bolt.Open("D:\\BattleField\\url-shortner\\bold.db", 0644, nil)
 
 	if err != nil {
