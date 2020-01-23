@@ -10,12 +10,11 @@ import (
 var world = []byte("world!")
 
 func main() {
-	db, err := bolt.Open("D:\\BattleField\\url-shortner\\bold.db", 0644, nil)
+	db, err := bolt.Open("C:\\Users\\Dictator\\Desktop\\BattleField\\url-shortner\\bold.db", 0644, nil)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "view.go : %v", err)
 	}
 	defer db.Close()
-	key := []byte("hello")
 
 	// retrieve the data
 	err = db.View(func(tx *bolt.Tx) error {
@@ -23,7 +22,7 @@ func main() {
 		if bucket == nil {
 			return fmt.Errorf("Bucket %q not found !", world)
 		}
-		val := bucket.Get(key)
+		val := bucket.Get([]byte("farz"))
 		fmt.Println(string(val))
 		return nil
 	})

@@ -10,7 +10,7 @@ import (
 var world = []byte("world!")
 
 func main() {
-	db, err := bolt.Open("/d/BattleField/url-shortner/bold.db", 0644, nil)
+	db, err := bolt.Open("C:\\Users\\Dictator\\Desktop\\BattleField\\url-shortner\\bold.db", 0644, nil)
 
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "db.go : %v", err)
@@ -28,9 +28,11 @@ func main() {
 			return err
 		}
 		err = bucket.Put(key, value)
+		err = bucket.Put([]byte("farzi"), []byte("Farzam Alam"))
 		if err != nil {
 			return err
 		}
+		return nil
 	})
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error : %v", err)
