@@ -1,53 +1,26 @@
-package BC
+package main
 
 import (
 	"fmt"
-	"os"
-
-	"github.com/boltdb/bolt"
+	"log"
+	"net/http"
+	"shorturl"
 )
 
-var world = []byte("world!")
+func main() {
 
-func avc() {
-	db, err := bolt.Open("D:\\BattleField\\url-shortner\\bold.db", 0644, nil)
+	dest := "https://golang.org/pkg/net/http"
+	src := "/gobaby"
 
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "db.go : %v", err)
-		os.Exit(1)
-	}
-	defer db.Close()
+	http.HandleFunc(src, shorturl.RedirectHandler(dest))
 
-	key := []byte("hello")
-	value := []byte("Hello world!")
-
-	//store some data
-	err = db.Update(func(tx *bolt.Tx) error {
-		bucket, err := tx.CreateBucketIfNotExists(world)
-		if err != nil {
-			return err
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path == "/" {
+			fmt.Fprintln(w, "Welcome to go-shorurl")
+		} else {
+			fmt.Fprintf(w, "%q Path in NOT FOUND", r.URL.Path)
 		}
-		err = bucket.Put(key, value)
-		if err != nil {
-			return err
-		}
-		return nil
 	})
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error : %v", err)
-	}
 
-	// retreive the data
-	err = db.View(func(tx *bolt.Tx) error {
-		bucket := tx.Bucket(world)
-		if bucket == nil {
-			return fmt.Errorf("Bucket %q not found !", world)
-		}
-		val := bucket.Get(key)
-		fmt.Println(string(val))
-		return nil
-	})
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error : %v", err)
-	}
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }

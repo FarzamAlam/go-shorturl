@@ -7,8 +7,6 @@ import (
 	"github.com/boltdb/bolt"
 )
 
-var world = []byte("world!")
-
 func main() {
 	db, err := bolt.Open("C:\\Users\\Dictator\\Desktop\\BattleField\\url-shortner\\bold.db", 0644, nil)
 	if err != nil {
