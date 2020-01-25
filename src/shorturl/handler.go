@@ -1,4 +1,4 @@
-package shorturl
+package m
 
 import (
 	"net/http"

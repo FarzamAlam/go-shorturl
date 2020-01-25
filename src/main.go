@@ -12,7 +12,8 @@ func main() {
 	dest := "https://golang.org/pkg/net/http"
 	src := "/gobaby"
 
-	http.HandleFunc(src, shorturl.RedirectHandler(dest))
+	redirect := shorturl.RedirectHandler(dest)
+	http.HandleFunc(src, redirect)
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path == "/" {
