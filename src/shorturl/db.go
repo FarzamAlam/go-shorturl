@@ -63,18 +63,20 @@ func FindURL(src string) (string, bool, error) {
 		fmt.Fprintf(os.Stderr, "Error while maintaining the connection with the db: %v", err)
 		return "", false, err
 	}
+	defer db.Close()
 	var dest []byte
 	// Retrieve the data
 	err = db.View(func(tx *bolt.Tx) error {
 		bucket := tx.Bucket([]byte("srcdest"))
 		if bucket == nil {
-			return fmt.Errorf("Buecket srcdest not found! ", bucket)
+			return fmt.Errorf("Bucket srcdest not found! %v", bucket)
 		}
 		dest = bucket.Get([]byte(src))
 		return nil
 	})
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error while getting dest %v", err)
+		return string(dest), false, err
 	}
 	return string(dest), true, nil
 }
