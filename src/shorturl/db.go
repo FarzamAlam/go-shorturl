@@ -78,5 +78,8 @@ func FindURL(src string) (string, bool, error) {
 		fmt.Fprintf(os.Stderr, "Error while getting dest %v", err)
 		return string(dest), false, err
 	}
+	if dest == nil {
+		return string(dest), false, nil
+	}
 	return string(dest), true, nil
 }
