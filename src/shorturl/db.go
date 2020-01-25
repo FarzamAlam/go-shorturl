@@ -1,4 +1,4 @@
-package main
+package shorturl
 
 import (
 	"fmt"
@@ -12,8 +12,8 @@ import (
 
 // main ... is used to create the entries manually and test the UpdateURL and FindURL methods.
 func main() {
-	src := "/farzamalam"
-	// dest := "https://github.com/farzamalam"
+	src := "1675a480"
+	// dest := "https://golang.org/pkg/net/http"
 
 	// err := CreateURL(src, dest)
 	// if err != nil {
