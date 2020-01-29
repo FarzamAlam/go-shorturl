@@ -34,13 +34,14 @@ func main() {
 }
 
 // CreateURL ... will insert a (src,dest) in Db, for now it will be called from main.
-func CreateURL(src, dest string) error {
-	db, err := bolt.Open("C:\\Users\\Dictator\\Desktop\\BattleField\\go-shorturl\\src\\database\\shorturl.db", 0644, nil)
+func CreateURL(dest string) error {
+	db, err := bolt.Open("D:\\BattleField\\go-shorturl\\src\\database\\shorturl.db", 0644, nil)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error while opening the Db : %v", err)
 		return err
 	}
 	defer db.Close()
+	src := GenerateHash(dest)
 	// Store src and destination.
 	err = db.Update(func(tx *bolt.Tx) error {
 		bucket, err := tx.CreateBucketIfNotExists([]byte("srcdest"))
@@ -58,7 +59,7 @@ func CreateURL(src, dest string) error {
 
 // FindURL ... will be called with short string and it will query the database and will return the database with dest and ok
 func FindURL(src string) (string, bool, error) {
-	db, err := bolt.Open("C:\\Users\\Dictator\\Desktop\\BattleField\\go-shorturl\\src\\database\\shorturl.db", 0644, nil)
+	db, err := bolt.Open("D:\\BattleField\\go-shorturl\\src\\database\\shorturl.db", 0644, nil)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error while maintaining the connection with the db: %v", err)
 		return "", false, err
@@ -82,4 +83,28 @@ func FindURL(src string) (string, bool, error) {
 		return string(dest), false, nil
 	}
 	return string(dest), true, nil
+}
+
+// PrintAllURL ... is used to print all the key, value pair present in the bucket.
+// It returns the error.
+func PrintAllURL() error {
+	db, err := bolt.Open("D:\\BattleField\\go-shorturl\\src\\database\\shorturl.db", 0644, nil)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error while maintaining connection with db: %v", err)
+		return err
+	}
+	defer db.Close()
+	// Print all the data
+	err = db.View(func(tx *bolt.Tx) error {
+		bucket := tx.Bucket([]byte("srcdest"))
+		c := bucket.Cursor()
+
+		for k, v := c.First(); k != nil; k, v = c.Next() {
+			fmt.Printf("key :%s, value : %s \n", k, v)
+
+		}
+		return nil
+	})
+
+	return err
 }

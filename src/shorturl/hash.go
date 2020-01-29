@@ -5,6 +5,6 @@ import (
 	"fmt"
 )
 
-func GenerateHash(src string) string {
-	return fmt.Sprintf("%x", md5.Sum([]byte(src)))
+func GenerateHash(dest string) string {
+	return fmt.Sprintf("%x", md5.Sum([]byte(dest)))
 }
