@@ -42,6 +42,7 @@ func CreateURL(dest string) error {
 	}
 	defer db.Close()
 	src := GenerateHash(dest)
+	fmt.Println(src)
 	// Store src and destination.
 	err = db.Update(func(tx *bolt.Tx) error {
 		bucket, err := tx.CreateBucketIfNotExists([]byte("srcdest"))
