@@ -11,6 +11,6 @@ func main() {
 	handler := shorturl.RedirectHandler()
 
 	http.HandleFunc("/", handler)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":80", nil))
 
 }
