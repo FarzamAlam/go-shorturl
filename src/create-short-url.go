@@ -30,7 +30,6 @@ func get(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(`{"message" :"Get Called!" }`))
 }
 func post(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("inside post()")
 	vars := mux.Vars(r)
 	destURL := vars["destURL"]
 	fmt.Println(destURL)
